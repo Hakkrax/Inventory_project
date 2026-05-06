@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crate Label</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f7f7f7;
+        }
+        .label {
+            background: #fff;
+            border: 2px solid #222;
+            border-radius: 16px;
+            padding: 28px 32px 32px 32px;
+            width: 420px;
+            margin: 32px auto;
+            box-shadow: 0 2px 16px #0002;
+            position: relative;
+        }
+        .crate-info {
+            margin-bottom: 18px;
+        }
+        h2 {
+            margin: 0 0 6px 0;
+            font-size: 1.46em;
+            letter-spacing: 2px;
+        }
+        h3 {
+            margin-top: 20px;
+            font-size: 1.08em;
+            font-weight: bold;
+        }
+        .qr {
+            float: right;
+            margin: 0 0 12px 24px;
+            border: 1.5px solid #ddd;
+            border-radius: 6px;
+            background: #fafafa;
+            padding: 3px;
+            width: 80px; /* Set to a smaller size */
+            height: 80px;
+            object-fit: contain;
+        }
+        .info-block p {
+            margin: 3px 0 0 0;
+            font-size: 1em;
+        }
+        table.products {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 8px;
+            font-size: 0.98em;
+        }
+        table.products th, table.products td {
+            border: 1px solid #bbb;
+            padding: 6px 12px;
+            text-align: left;
+        }
+        table.products th {
+            background: #f0f0f0;
+            font-weight: 600;
+        }
+        /* Clear floats after QR image */
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        @media print {
+            body { background: #fff; }
+            .label { 
+                margin: 0;
+                box-shadow: none;
+                width: 100vw;
+                min-width: 0;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body onload="window.print()">
+
+<div class="label">
+    <div class="clearfix">
+        <img src="/{{ qr_path }}" class="qr" alt="QR Code">
+        <div class="crate-info info-block">
+            <h2>Crate: {{ crate.crate_number }}</h2>
+            <p><strong>Location:</strong> {{ crate.location }}</p>
+            <p><strong>Type:</strong> {{ crate.product_type }}</p>
+        </div>
+    </div>
+    <h3>Products</h3>
+    <table class="products">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Product</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in products %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ p }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
